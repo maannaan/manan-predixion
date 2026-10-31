@@ -39,11 +39,20 @@ jobs:
 
   build-and-push:
     needs: test
-    # Skip unless AWS_OIDC_ROLE_ARN is set. Empty role-to-assume fails the job.
-    if: ${{ secrets.AWS_OIDC_ROLE_ARN != '' && (github.event_name == 'workflow_dispatch' || (github.ref == 'refs/heads/main' && github.event_name == 'push')) }}
+    # Job-level `if` cannot read `secrets`. Push/PR only runs tests.
+    # ECR push is manual until AWS_OIDC_ROLE_ARN is configured.
+    if: github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Require OIDC role
+        env:
+          ROLE: ${{ secrets.AWS_OIDC_ROLE_ARN }}
+        run: |
+          if [ -z "$ROLE" ]; then
+            echo "Set repo secret AWS_OIDC_ROLE_ARN before dispatching this job."
+            exit 1
+          fi
       - name: Configure AWS credentials (OIDC)
         uses: aws-actions/configure-aws-credentials@v4
         with:
@@ -61,7 +70,7 @@ jobs:
 
   deploy:
     needs: build-and-push
-    if: ${{ secrets.AWS_OIDC_ROLE_ARN != '' && github.event_name == 'workflow_dispatch' && inputs.deploy }}
+    if: github.event_name == 'workflow_dispatch' && inputs.deploy
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

@@ -42,4 +42,4 @@ No `terraform apply` has been run. There is no live URL.
 
 ## CI
 
-[`.github/workflows/assignment3.yml`](../.github/workflows/assignment3.yml) — tests on PR/push; image push uses AWS OIDC when `AWS_OIDC_ROLE_ARN` is set; `terraform apply` only on `workflow_dispatch` with `deploy=true`.
+[`.github/workflows/assignment3.yml`](../.github/workflows/assignment3.yml) — tests on PR/push; image push / `terraform apply` only on `workflow_dispatch` (OIDC via `AWS_OIDC_ROLE_ARN`).

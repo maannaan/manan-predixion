@@ -30,7 +30,7 @@ Apply complete! Resources: 31 added, 0 changed, 0 destroyed.
 ## GitHub Actions
 
 - `test` runs on push/PR. That is the required check.
-- `build-and-push` uses AWS OIDC (`secrets.AWS_OIDC_ROLE_ARN`). The secret is not set, so that job is skipped instead of failing. Image was pushed locally to ECR.
+- `build-and-push` / `deploy` run only on `workflow_dispatch` (GitHub forbids `secrets` in job-level `if`). Image was pushed locally to ECR.
 - Account already has `token.actions.githubusercontent.com` OIDC provider. Live deploy used local `terraform apply` + `docker push`, not Actions.
 
 ## Teardown (do this today)
