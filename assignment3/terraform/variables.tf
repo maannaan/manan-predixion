@@ -17,3 +17,9 @@ variable "crm_secret_name" {
   type    = string
   default = "predixion/call-webhook/crm"
 }
+
+variable "crm_url" {
+  type      = string
+  default   = "https://example.invalid/crm"
+  sensitive = true
+}

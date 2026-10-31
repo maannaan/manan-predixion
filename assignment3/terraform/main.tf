@@ -116,6 +116,11 @@ resource "aws_secretsmanager_secret" "crm" {
   name = var.crm_secret_name
 }
 
+resource "aws_secretsmanager_secret_version" "crm" {
+  secret_id     = aws_secretsmanager_secret.crm.id
+  secret_string = var.crm_url
+}
+
 resource "aws_lb" "this" {
   name               = "${var.project}-alb"
   internal           = false
