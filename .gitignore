@@ -55,6 +55,17 @@ scratch/local/
 *.pdf
 .pdf-preview/
 
+# Local working notes (not for GitHub)
+PREDIXION_FINAL_ROUND_CONTEXT.md
+EXECUTION_CHECKLIST.md
+ENGINEERING_DECISIONS.md
+FOUNDER_DISCUSSION_PREP.md
+IMPLEMENTATION_WALKTHROUGH.md
+STATUS.md
+**/ENGINEERING_DECISIONS.md
+**/FOUNDER_DISCUSSION_PREP.md
+**/IMPLEMENTATION_WALKTHROUGH.md
+
 # Generated analytics datasets
 assignment2/accounts.csv
 assignment2/calls.csv
