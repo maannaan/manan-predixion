@@ -1,1 +1,5 @@
-# Pinned when Part B is implemented. Empty until then.
+langchain==0.3.30
+langchain-core==0.3.86
+langchain-openai==0.2.14
+langgraph==0.2.76
+pytest==8.3.5
