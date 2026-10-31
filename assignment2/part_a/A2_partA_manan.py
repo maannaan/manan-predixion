@@ -9,7 +9,6 @@ def normal_cdf(z: float) -> float:
 def capacity(accounts=200_000, max_attempts=3, p_connect=0.25,
              connected_secs=120, unanswered_secs=30, day_hours=10):
     q = 1 - p_connect
-    # attempt k happens only if the previous k-1 attempts all failed
     exp_attempts = sum(q ** k for k in range(max_attempts))
     p_ever_connected = 1 - q ** max_attempts
     exp_unanswered = exp_attempts - p_ever_connected
