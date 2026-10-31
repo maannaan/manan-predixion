@@ -1,8 +1,8 @@
 # Assignment 3 — notes
 
-## Part A
+## Part A → Part B
 
-Not present. Do not treat this Part B service as the candidate’s Part A submission.
+`app/retry.py` imports `schedule_retry`, `notify_crm`, and `RETRYABLE` from `part_a/A3_partA_manan.py`. Window is 08:00 inclusive, 19:00 exclusive. Negative attempt raises `ValueError`. CRM notify is async with backoff; webhook still returns 200 if CRM is down.
 
 ## Part B decisions
 

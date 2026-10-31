@@ -16,9 +16,9 @@ def test_webhook_busy_schedules_retry(monkeypatch, tmp_path):
     monkeypatch.setenv("DATABASE_PATH", str(tmp_path / "calls.db"))
     called = {}
 
-    def fake_notify(url, account_id, next_call, timeout_s=5.0):
+    async def fake_notify(crm_url, account_id, next_call, attempts=5):
         called["next"] = next_call
-        return True
+        return {"status": "ok"}
 
     monkeypatch.setattr(main_mod, "notify_crm", fake_notify)
     with TestClient(app) as client:
@@ -38,9 +38,9 @@ def test_webhook_ptp_does_not_retry(monkeypatch, tmp_path):
     monkeypatch.setenv("DATABASE_PATH", str(tmp_path / "calls.db"))
     called = {"n": 0}
 
-    def fake_notify(*_a, **_k):
+    async def fake_notify(*_a, **_k):
         called["n"] += 1
-        return True
+        return {"status": "ok"}
 
     monkeypatch.setattr(main_mod, "notify_crm", fake_notify)
     with TestClient(app) as client:

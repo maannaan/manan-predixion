@@ -3,6 +3,7 @@ FROM python:3.12-slim
 WORKDIR /app
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
+    PYTHONPATH=/app:/app/part_a \
     DATABASE_PATH=/tmp/calls.db \
     PORT=8080
 
@@ -12,6 +13,7 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 COPY app ./app
+COPY part_a ./part_a
 
 USER appuser
 EXPOSE 8080

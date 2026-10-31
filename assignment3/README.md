@@ -1,6 +1,6 @@
 # Assignment 3 — Fix and Ship (Part B)
 
-Production webhook service. **Part A was not supplied** (`part_a/` has no candidate answers). This folder is Part B only and does not claim Part A is complete.
+Production webhook service. **Part B imports the corrected `schedule_retry` / CRM notify / retryable dispositions from `part_a/A3_partA_manan.py`.** Do not edit Part A from the assistant.
 
 ## App
 

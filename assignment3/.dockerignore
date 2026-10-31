@@ -4,5 +4,5 @@ __pycache__
 tests
 terraform
 *.md
-part_a
+part_a/test_*.py
 .env
