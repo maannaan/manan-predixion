@@ -1,7 +1,34 @@
-# Assignment 1 — Collections Ledger
+# Assignment 1 — Collections Ledger (Part B)
 
-Part B implementation is not present yet.
+SQLite-backed `ledger/` package. Money is integer paise. Return values are exactly `POSTED`, `DUPLICATE`, `OVERPAID`.
 
-When authorized, this folder will contain the SQLite ledger, tests, and pinned `requirements.txt`, following the candidate brief exactly.
+## Layout
 
-Part A is completed independently and is not stored or solved here.
+- `part_a/` — your independent Part A work. Not generated or edited by AI.
+- `ledger/` — Part B implementation
+- `tests/` — pytest
+
+## API
+
+| Function | Behavior |
+|---|---|
+| `init_db(path)` | Creates `loans` and `payments` with constraints; returns a connection |
+| `post_payment(conn, loan_id, amount, gateway_txn_id) -> str` | Atomic + idempotent on `gateway_txn_id` |
+| `collection_efficiency(conn, year, month) -> float` | Collected in month ÷ EMI due in month |
+| `load_loans_csv(conn, path)` | Inserts valid rows; returns `[{"line", "reason"}, ...]` |
+
+`post_payment` amounts are rupees as `Decimal`, `int`, or numeric `str` (not `float`).
+
+CSV header: `loan_id,emi_amount,outstanding_amount,due_date` with `due_date` as `YYYY-MM-DD`.
+
+## Run tests
+
+```bash
+cd assignment1
+python3.12 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+pytest
+```
+
+Expected: 9 passed.
