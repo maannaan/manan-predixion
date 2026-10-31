@@ -29,9 +29,9 @@ Apply complete! Resources: 31 added, 0 changed, 0 destroyed.
 
 ## GitHub Actions
 
-- `test` runs on push/PR. That is the required check.
-- `build-and-push` / `deploy` run only on `workflow_dispatch` (GitHub forbids `secrets` in job-level `if`). Image was pushed locally to ECR.
-- Account already has `token.actions.githubusercontent.com` OIDC provider. Live deploy used local `terraform apply` + `docker push`, not Actions.
+- `test` runs on push/PR.
+- **Run workflow** runs `build-and-push` then `deploy` (ECS force-new-deployment). OIDC role `predixion-call-webhook-gha`. Repo secret `AWS_OIDC_ROLE_ARN` is set.
+- `terraform apply` is local only. CI must not apply: state is `assignment3/terraform/terraform.tfstate` on this laptop, not a remote backend.
 
 ## Teardown (do this today)
 

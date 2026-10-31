@@ -42,4 +42,4 @@ No `terraform apply` has been run. There is no live URL.
 
 ## CI
 
-[`.github/workflows/assignment3.yml`](../.github/workflows/assignment3.yml) — tests on PR/push; image push / `terraform apply` only on `workflow_dispatch` (OIDC via `AWS_OIDC_ROLE_ARN`).
+[`.github/workflows/assignment3.yml`](../.github/workflows/assignment3.yml) — tests on PR/push. **Run workflow** builds, pushes ECR (`:sha` and `:latest`), and rolls the existing ECS service. `terraform apply` stays local — GitHub does not have the state file.

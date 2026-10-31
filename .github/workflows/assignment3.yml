@@ -9,11 +9,6 @@ on:
     paths:
       - "assignment3/**"
   workflow_dispatch:
-    inputs:
-      deploy:
-        description: "Also terraform apply (billable). Default is false."
-        type: boolean
-        default: false
 
 permissions:
   id-token: write
@@ -22,6 +17,8 @@ permissions:
 env:
   AWS_REGION: ap-south-1
   ECR_REPOSITORY: predixion-call-webhook
+  ECS_CLUSTER: predixion-call-webhook
+  ECS_SERVICE: predixion-call-webhook
 
 jobs:
   test:
@@ -40,9 +37,10 @@ jobs:
   build-and-push:
     needs: test
     # Job-level `if` cannot read `secrets`. Push/PR only runs tests.
-    # ECR push is manual until AWS_OIDC_ROLE_ARN is configured.
     if: github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
+    outputs:
+      image: ${{ steps.push.outputs.image }}
     steps:
       - uses: actions/checkout@v4
       - name: Require OIDC role
@@ -62,28 +60,33 @@ jobs:
         id: ecr
         uses: aws-actions/amazon-ecr-login@v2
       - name: Build and push
+        id: push
         working-directory: assignment3
         run: |
-          IMAGE="${{ steps.ecr.outputs.registry }}/${ECR_REPOSITORY}:${GITHUB_SHA}"
-          docker build -t "$IMAGE" .
+          REGISTRY="${{ steps.ecr.outputs.registry }}"
+          IMAGE="${REGISTRY}/${ECR_REPOSITORY}:${GITHUB_SHA}"
+          LATEST="${REGISTRY}/${ECR_REPOSITORY}:latest"
+          docker build -t "$IMAGE" -t "$LATEST" .
           docker push "$IMAGE"
+          docker push "$LATEST"
+          echo "image=$IMAGE" >> "$GITHUB_OUTPUT"
 
   deploy:
     needs: build-and-push
-    if: github.event_name == 'workflow_dispatch' && inputs.deploy
+    if: github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: hashicorp/setup-terraform@v3
       - name: Configure AWS credentials (OIDC)
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ secrets.AWS_OIDC_ROLE_ARN }}
           aws-region: ${{ env.AWS_REGION }}
-      - name: Terraform apply
-        working-directory: assignment3/terraform
+      - name: Roll ECS service
         run: |
-          terraform init
-          terraform apply -auto-approve -var="image_tag=${GITHUB_SHA}"
-        env:
-          TF_IN_AUTOMATION: "true"
+          aws ecs update-service \
+            --cluster "$ECS_CLUSTER" \
+            --service "$ECS_SERVICE" \
+            --force-new-deployment \
+            --query 'service.{status:status,taskDefinition:taskDefinition,desiredCount:desiredCount}' \
+            --output table
+          aws ecs wait services-stable --cluster "$ECS_CLUSTER" --services "$ECS_SERVICE"
