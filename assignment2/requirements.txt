@@ -1,1 +1,4 @@
-# Pinned when Part B is implemented. Empty until then.
+numpy==2.1.3
+pandas==2.2.3
+matplotlib==3.9.2
+pytest==8.3.5
