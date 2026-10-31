@@ -60,5 +60,3 @@ sequenceDiagram
   end
   Task-->>Client: 200
 ```
-
-Do not commit `.env` or secrets. Destroy the stack within 24 hours: `cd assignment3/terraform && AWS_PROFILE=default terraform destroy -auto-approve`.
