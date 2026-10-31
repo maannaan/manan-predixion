@@ -1,0 +1,62 @@
+# Secrets and local env
+.env
+.env.*
+!.env.example
+!.env.*.example
+*.pem
+*.key
+credentials.json
+secrets.json
+
+# Python
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+dist/
+build/
+*.egg-info/
+
+# Node
+node_modules/
+npm-debug.log*
+dist-node/
+
+# Terraform / IaC
+.terraform/
+*.tfstate
+*.tfstate.*
+crash.log
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+.terraformrc
+terraform.rc
+
+# OS / IDE
+.DS_Store
+.idea/
+.vscode/
+*.swp
+
+# Logs and local artifacts
+*.log
+tmp/
+scratch/local/
+.cache/
+
+# Assignment brief (not a submission artifact)
+*.pdf
+.pdf-preview/
+
+# Generated analytics datasets
+assignment2/accounts.csv
+assignment2/calls.csv
+accounts.csv
+calls.csv
