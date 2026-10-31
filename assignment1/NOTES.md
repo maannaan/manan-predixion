@@ -1,5 +1,9 @@
 # Assignment 1 — notes
 
+## Part A → Part B
+
+`post_payment` is the Part A A3.4 fix in code: `UNIQUE(gateway_txn_id)` plus `BEGIN IMMEDIATE`. `merge_windows` / `flag_excess_attempts` stay in `part_a/` and are covered by `tests/test_part_a.py`.
+
 ## Decisions
 
 - Store rupees as integer paise. SQLite has no Decimal type; floats are forbidden for money.

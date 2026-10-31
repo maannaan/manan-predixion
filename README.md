@@ -1,18 +1,24 @@
 # manan-predixion
 
-Private submission repository for Predixion AI engineering assignments (Manan Paliwal).
+Private submission for Predixion AI engineering assignments (Manan Paliwal). Python 3.12.
 
-Four assignments. Part A is completed independently without AI. Part B is implemented in this repo after each Part A is finished.
+Part A lives in `assignmentN/part_a/` (candidate-owned, not edited by AI). Part B uses it where the brief says to: A3 imports `schedule_retry` / `notify_crm`; A4 loads the rewritten system prompt. A1 ledger implements the A3.4 unique `gateway_txn_id` rule; A2 analysis is a separate extract from Part A’s capacity/A/B/funnel.
 
-| Folder | Assignment | Skills |
-|---|---|---|
-| [assignment1/](assignment1/) | Collections Ledger | Python, SQL, transactions |
-| [assignment2/](assignment2/) | Dialer Campaign Analytics | Analytics, statistics |
-| [assignment3/](assignment3/) | Fix and Ship | Debugging, AWS, deployment |
-| [assignment4/](assignment4/) | Collections Assistant Agent | LangChain, tools, prompts |
+## Run each Part B
 
-See each folder’s `README.md`, `NOTES.md`, and `AI_USAGE.md`. Root AI log: [AI_USAGE.md](AI_USAGE.md). Running status: [STATUS.md](STATUS.md).
+```bash
+# 1 Collections ledger
+cd assignment1 && python3.12 -m venv .venv && source .venv/bin/activate && pip install -r requirements.txt && pytest
 
-Python 3.12 is the intended runtime (`python3.12`). Pin dependencies per assignment in that folder’s `requirements.txt`.
+# 2 Dialer analytics
+cd assignment2 && python3.12 -m venv .venv && source .venv/bin/activate && pip install -r requirements.txt && python analyze.py && pytest
 
-Do not commit `.env`, AWS keys, or secrets. Use `.env.example` where configuration is required.
+# 3 Webhook
+cd assignment3 && python3.12 -m venv .venv && source .venv/bin/activate && pip install -r requirements.txt && pytest
+# docker build/run when Docker Desktop is up; terraform -chdir=terraform validate && plan (no apply)
+
+# 4 Collections agent
+cd assignment4 && python3.12 -m venv .venv && source .venv/bin/activate && pip install -r requirements.txt && python eval.py && pytest
+```
+
+Do not commit `.env` or secrets.

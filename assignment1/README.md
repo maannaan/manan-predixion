@@ -4,9 +4,9 @@ SQLite-backed `ledger/` package. Money is integer paise. Return values are exact
 
 ## Layout
 
-- `part_a/` — your independent Part A work. Not generated or edited by AI.
-- `ledger/` — Part B implementation
-- `tests/` — pytest
+- `part_a/` — independent Part A (`merge_windows`, `flag_excess_attempts`, SQL). Not edited by AI.
+- `ledger/` — Part B package. Idempotency matches Part A A3.4 (`UNIQUE gateway_txn_id`).
+- `tests/` — pytest (ledger + Part A helpers)
 
 ## API
 
@@ -31,4 +31,4 @@ pip install -r requirements.txt
 pytest
 ```
 
-Expected: 9 passed.
+Expected: ledger tests plus Part A helper tests.

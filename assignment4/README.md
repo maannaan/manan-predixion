@@ -2,7 +2,7 @@
 
 Text-mode collections agent. Rules live in **tool code**. Evals judge **tool calls and mock DB state**, not wording.
 
-`part_a/` is candidate-only and is not used here.
+**Part B loads the rewritten system prompt from `part_a/A4_partA_manan.md`.** Tools still enforce the rules in code. Do not edit Part A from the assistant.
 
 ## Layout
 

@@ -2,7 +2,7 @@
 
 ## Layout
 
-- `part_a/` — your independent Part A work. Not generated or edited by AI.
+- `part_a/` — independent Part A (capacity / A/B / funnel / scheduler). Not edited by AI.
 - `gen_data.py` — **exact** generator from the brief. Do not modify.
 - `analyze.py` — metrics, charts, memo
 - `analysis.ipynb` — same analysis as a notebook

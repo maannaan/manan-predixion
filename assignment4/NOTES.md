@@ -1,5 +1,9 @@
 # Assignment 4 — notes
 
+## Part A → Part B
+
+`part_a_prompt.py` reads the rewritten voice prompt from `part_a/A4_partA_manan.md` (A1). Evals still judge tools and store state, not wording. There is still no settle/mark-paid tool (A3.4).
+
 ## Choices
 
 - LangGraph `create_react_agent` + `MemorySaver` (brief allows LangGraph). Tools are LangChain `@tool`.

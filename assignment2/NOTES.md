@@ -1,5 +1,9 @@
 # Assignment 2 — notes
 
+## Part A → Part B
+
+Part A (capacity, A/B z-test, funnel, scheduler) is independent of this extract. `tests/test_part_a.py` runs those functions and checks the write-up numbers. Part B only analyses `gen_data.py` output.
+
 ## Method
 
 - Generator is copied from the brief and not modified (`numpy` default_rng 42, N=20,000).
