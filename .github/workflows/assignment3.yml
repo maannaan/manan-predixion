@@ -39,7 +39,8 @@ jobs:
 
   build-and-push:
     needs: test
-    if: github.event_name == 'workflow_dispatch' || (github.ref == 'refs/heads/main' && github.event_name == 'push')
+    # Skip unless AWS_OIDC_ROLE_ARN is set. Empty role-to-assume fails the job.
+    if: ${{ secrets.AWS_OIDC_ROLE_ARN != '' && (github.event_name == 'workflow_dispatch' || (github.ref == 'refs/heads/main' && github.event_name == 'push')) }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -60,7 +61,7 @@ jobs:
 
   deploy:
     needs: build-and-push
-    if: github.event_name == 'workflow_dispatch' && inputs.deploy
+    if: ${{ secrets.AWS_OIDC_ROLE_ARN != '' && github.event_name == 'workflow_dispatch' && inputs.deploy }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
